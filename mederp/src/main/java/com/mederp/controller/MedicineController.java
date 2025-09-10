@@ -3,6 +3,7 @@ package com.mederp.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 // import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,8 @@ public class MedicineController {
         return ResponseEntity.ok(service.create(request));
     }
 
-    @GetMapping
+    @PreAuthorize("hasRole('SUPER_ADMIN', 'ADMIN')")
+    @GetMapping("medicines")
     public ResponseEntity<List<MedicineResponse>> list (@RequestParam (required = false, name = "name") String nameContains,
                                                         @RequestParam(required = false) MedicineCategory category) {
                     return ResponseEntity.ok(service.list(nameContains, category));

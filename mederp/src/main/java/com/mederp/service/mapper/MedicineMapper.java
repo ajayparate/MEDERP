@@ -12,4 +12,19 @@ public class MedicineMapper {
             .category(m.getCategory())
             .build();
     }
+
+//     public static MedicineResponse toResponse1(Medicine med) {
+//     return MedicineResponse.builder()
+//       .id(med.getId())
+//       .name(med.getName())
+//       .manufacturer(med.getManufacturer())
+//       .category(med.getCategory())
+//       .quantity(med.getQuantity())
+//       .price(med.getPrice())
+//       .expiryDate(med.getExpiryDate())
+//       .manufacturingDate(med.getManufacturingDate())
+//       .available(med.isAvailable())
+//       .build();
+//   }
+
 }

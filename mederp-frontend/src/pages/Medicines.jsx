@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useContext, useEffect } from "react";
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
@@ -74,6 +75,7 @@ const Medicines = () => {
   return (
     <div>
       <h2>Medicines</h2>
+      <button>Search</button>
 
       <input
         type="text"
@@ -86,12 +88,29 @@ const Medicines = () => {
       />
 
       <h2>Create Medicine</h2>
+      <div typeof="container">
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" placeholder="Medicine Name" value={medicine.name} onChange={handleChange} required />
         <br />
         <input type="text" name="manufacturer" placeholder="Manufacturer" value={medicine.manufacturer} onChange={handleChange} required />
         <br />
-        <input type="text" name="category" placeholder="Category" value={medicine.category} onChange={handleChange} required />
+        <select
+          name="category"
+          value={medicine.category}
+          onChange={handleChange}
+          required
+        >
+          <option value="">-- Select Category --</option>
+          <option value="TABLET">TABLET</option>
+          <option value="CAPSULE">CAPSULE</option>
+          <option value="SYRUP">SYRUP</option>
+          <option value="INHALER">INHALER</option>
+          <option value="SUSPENSION">SUSPENSION</option>
+          <option value="DROP">DROP</option>
+          <option value="INJECTION">INJECTION</option>
+          <option value="OINTMENT">OINTMENT</option>
+          <option value="OTHERS">OTHERS</option>
+        </select>
         <br />
         <input type="number" name="quantity" placeholder="Quantity" value={medicine.quantity} onChange={handleChange} required />
         <br />
@@ -109,6 +128,7 @@ const Medicines = () => {
         <br />
         <button type="submit">Add Medicine</button>
       </form>
+      </div>
 
       {message && <p>{message}</p>}
 

@@ -1,3 +1,4 @@
+
 package com.mederp.services;
 
 import java.util.List;
@@ -14,7 +15,6 @@ import com.mederp.enums.MedicineCategory;
 import com.mederp.repository.MedicineRepository;
 import com.mederp.service.mapper.MedicineMapper;
 
-// import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -23,27 +23,33 @@ public class MedicineService {
     private final MedicineRepository repo;
 
     @Transactional
-    public ApiResponse<MedicineResponse> create (MedicineCreateRequest request) {
-        if (repo.existsByNameIgnoreCaseAndCategory(request.getName(), request.getCategory())) {
-            return ApiResponse.<MedicineResponse> builder()
-                .success(false)
-                .message("Medicine already exists with same name and category")
-                
-                .build();
-
-            
+    public ApiResponse<MedicineResponse> create(MedicineCreateRequest req) {
+        if (repo.existsByNameIgnoreCaseAndCategory(req.getName(), req.getCategory())) {
+            return ApiResponse.<MedicineResponse>builder()
+            .success(false)
+            .message("Medicine already exists with same name and category")
+            .build();
         }
-        Medicine saved = repo.save(Medicine.builder()
-            .name(request.getName().trim())
-            .category(request.getCategory())
-            .build());
 
+        Medicine entity = Medicine.builder()
+            .name(req.getName().trim())
+            .manufacturer(req.getManufacturer().trim())
+            .category(req.getCategory())
+            .quantity(req.getQuantity())
+            .price(req.getPrice())
+            .expiryDate(req.getExpiryDate())
+            .manufacturingDate(req.getManufacturingDate())
+            .available(req.isAvailable())
+            .build();
+
+        Medicine saved = repo.save(entity);
         return ApiResponse.<MedicineResponse>builder()
             .success(true)
-            .message("Medicine data has Been created")
+            .message("Medicine created successfully")
             .data(MedicineMapper.toResponse(saved))
             .build();
-    }
+        }
+
 
 
     @Transactional(readOnly = true)
@@ -95,6 +101,7 @@ public class MedicineService {
 
             m.setName(request.getName().trim());
             m.setCategory(request.getCategory());
+            
 
             Medicine saved = repo.save(m);
 

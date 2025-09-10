@@ -2,6 +2,7 @@ package com.mederp.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mederp.enums.MedicineCategory;
 
 import jakarta.persistence.Column;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,16 +46,18 @@ public class Medicine {
     @Enumerated(EnumType.STRING)
     private MedicineCategory category;
 
-    @NotBlank(message = "Quantity is required.")
+    @NotNull(message = "Quantity is required.")
     private int quantity;
 
     private double price;
 
-    @NotBlank(message = "Expiry Date is required.")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    // @NotBlank(message = "Expiry Date is required.")
     private LocalDate expiryDate;
 
-    @NotBlank(message = "Manufacting Date is required.")
-    private String manufacturingDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    // @NotBlank(message = "Manufacting Date is required.")
+    private LocalDate manufacturingDate;
 
     private boolean available; // this check the medicine is available in the market or not (illegal medicine)
 
